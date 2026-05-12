@@ -60,6 +60,11 @@ export QWEN_API_KEY="your-api-key"
 /Users/Adam/Desktop/cc-src/scripts/claude-qwen.sh
 ```
 
+Kimi defaults to Moonshot Open Platform mode. To force the Kimi Code endpoint,
+set `KIMI_MODE=code`, but that endpoint may require a Kimi Code-specific key or
+plan. Moonshot Open Platform defaults to the China endpoint. Use
+`KIMI_REGION=intl` for the international endpoint.
+
 ## Optional Aliases
 
 Add aliases to your shell config if you want shorter commands:

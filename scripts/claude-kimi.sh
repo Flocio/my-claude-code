@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-KIMI_MODE="${KIMI_MODE:-code}"
+KIMI_MODE="${KIMI_MODE:-platform}"
 
 case "$KIMI_MODE" in
   code)
@@ -12,7 +12,18 @@ case "$KIMI_MODE" in
     ;;
   platform | moonshot)
     API_KEY="${MOONSHOT_API_KEY:-${KIMI_API_KEY:-}}"
-    DEFAULT_BASE_URL="https://api.moonshot.ai/anthropic"
+    case "${KIMI_REGION:-cn}" in
+      cn | china | mainland)
+        DEFAULT_BASE_URL="https://api.moonshot.cn/anthropic"
+        ;;
+      intl | international | global)
+        DEFAULT_BASE_URL="https://api.moonshot.ai/anthropic"
+        ;;
+      *)
+        echo "Unsupported KIMI_REGION: ${KIMI_REGION}. Use cn or intl." >&2
+        exit 2
+        ;;
+    esac
     DEFAULT_MODEL="kimi-k2.5"
     KEY_HINT="MOONSHOT_API_KEY or KIMI_API_KEY"
     ;;

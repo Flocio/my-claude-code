@@ -57,6 +57,11 @@ export QWEN_API_KEY="你的 API Key"
 /Users/Adam/Desktop/cc-src/scripts/claude-qwen.sh
 ```
 
+Kimi 默认使用 Moonshot Open Platform 兼容入口。如果要强制使用 Kimi Code
+专用入口，可以设置 `KIMI_MODE=code`，但该入口可能需要 Kimi Code 专用的 key
+或套餐。Moonshot Open Platform 默认走中国区入口；如果需要国际区入口，设置
+`KIMI_REGION=intl`。
+
 ## 可选别名
 
 如果想少输入路径，可以把别名加入你的 shell 配置文件：
