@@ -1,14 +1,16 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if [[ -z "${DEEPSEEK_API_KEY:-}" && -z "${ANTHROPIC_API_KEY:-}" ]]; then
+API_KEY="${DEEPSEEK_API_KEY:-${ANTHROPIC_API_KEY:-}}"
+
+if [[ -z "$API_KEY" ]]; then
   echo "Set DEEPSEEK_API_KEY first, for example: export DEEPSEEK_API_KEY=sk-..." >&2
   exit 2
 fi
 
-export ANTHROPIC_BASE_URL="${ANTHROPIC_BASE_URL:-https://api.deepseek.com/anthropic}"
-export ANTHROPIC_API_KEY="${ANTHROPIC_API_KEY:-${DEEPSEEK_API_KEY:-}}"
-export ANTHROPIC_AUTH_TOKEN="${ANTHROPIC_AUTH_TOKEN:-$ANTHROPIC_API_KEY}"
+export ANTHROPIC_BASE_URL="${DEEPSEEK_BASE_URL:-https://api.deepseek.com/anthropic}"
+export ANTHROPIC_API_KEY="$API_KEY"
+export ANTHROPIC_AUTH_TOKEN="$API_KEY"
 export ANTHROPIC_MODEL="${ANTHROPIC_MODEL:-deepseek-v4-pro[1m]}"
 export ANTHROPIC_DEFAULT_OPUS_MODEL="${ANTHROPIC_DEFAULT_OPUS_MODEL:-deepseek-v4-pro[1m]}"
 export ANTHROPIC_DEFAULT_SONNET_MODEL="${ANTHROPIC_DEFAULT_SONNET_MODEL:-deepseek-v4-pro[1m]}"
@@ -19,6 +21,7 @@ export CLAUDE_CODE_EFFORT_LEVEL="${CLAUDE_CODE_EFFORT_LEVEL:-max}"
 
 export CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC="${CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC:-1}"
 export DISABLE_TELEMETRY="${DISABLE_TELEMETRY:-1}"
+export CLAUDE_CONFIG_DIR="${CLAUDE_CONFIG_DIR:-$HOME/.claude-deepseek}"
 
 CLAUDE_BIN="${CLAUDE_BIN:-claude}"
 exec "$CLAUDE_BIN" --bare --thinking disabled "$@"
